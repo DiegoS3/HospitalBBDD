@@ -15,6 +15,7 @@ namespace HospitalBBDD
     public partial class frmMain : Form
     {
         private ArrayList listaMedicos;
+        private ArrayList listaMedicosCitas;
         private ArrayList listaPacientes;
 
         public frmMain()
@@ -32,10 +33,12 @@ namespace HospitalBBDD
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            // TODO: esta línea de código carga datos en la tabla 'dsBD.diagnosticos' Puede moverla o quitarla según sea necesario.
             
             this.especialidadesTableAdapter.Fill(this.dsBD.especialidades);
             this.cmbEspecialidad.Text = "";
             this.timeNow.Enabled = true;
+            cargarMedicos();
             
         }
 
@@ -91,6 +94,7 @@ namespace HospitalBBDD
             this.txtApellidosMedico.Text = this.dsBD.medicos[0].apellidos;
             this.txtMovil.Text = this.dsBD.medicos[0].movil;
             this.txtEspecialidad.Text = this.dsBD.medicos[0].especialidad;
+            //this.nombreComboBox.Text = this.dsBD.medicos
             cambiarFotoMedico();
         }
 
@@ -154,6 +158,42 @@ namespace HospitalBBDD
         {
             this.lblHora.Text = DateTime.Now.ToString("hh:mm:ss");
             this.lblDia.Text = DateTime.Now.ToString("dd/MM/yyyy");
+        }
+
+        private void cargarMedicos()
+        {
+            this.listaMedicosCitas = new ArrayList();
+            this.medicosTableAdapter.Fill(this.dsBD.medicos);
+            this.nombreComboBox.Text = "";
+            this.lblEspecialidadCita.Text = "";
+            this.lblIdMedicoCita.Text = "";
+
+            foreach (var item in this.dsBD.medicos)
+            {
+                listaMedicosCitas.Add(item.idmedico);
+                this.nombreComboBox.Items.Add(item.nombre + " " + item.apellidos);
+
+            }
+
+        }
+
+        private void nombreComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            this.dgvDiagnosticos.Columns[0].ReadOnly = true;
+            this.dgvDiagnosticos.Columns[1].ReadOnly = true;
+            this.dgvDiagnosticos.Columns[2].ReadOnly = true;
+            this.dgvDiagnosticos.Columns[3].ReadOnly = true;
+
+            int id = (int)listaMedicosCitas[this.nombreComboBox.SelectedIndex];            
+            this.diagnosticosTableAdapter.FillByIdMedico(this.dsBD.diagnosticos, id);
+            if (this.dsBD.diagnosticos.Count > 0)
+            {
+                this.lblEspecialidadCita.Text = this.dsBD.diagnosticos[0].especialidad;
+                this.lblIdMedicoCita.Text = id.ToString();
+            }
+
+
         }
     }
 }
