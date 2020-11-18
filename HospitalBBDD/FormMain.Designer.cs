@@ -82,10 +82,16 @@
             this.txtApellidosMedico = new System.Windows.Forms.TextBox();
             this.txtNombreMedico = new System.Windows.Forms.TextBox();
             this.lblIdMedico = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnMedicos = new System.Windows.Forms.Button();
             this.pcbMedico = new System.Windows.Forms.PictureBox();
             this.lblMedico = new System.Windows.Forms.Label();
             this.pnlPacientes = new System.Windows.Forms.Panel();
+            this.txtDestacar = new System.Windows.Forms.TextBox();
+            this.txtAlergias = new System.Windows.Forms.TextBox();
+            this.txtLocalidad = new System.Windows.Forms.TextBox();
+            this.txtApellidosPaciente = new System.Windows.Forms.TextBox();
+            this.txtNombrePaciente = new System.Windows.Forms.TextBox();
+            this.lblIdPaciente = new System.Windows.Forms.Label();
             this.btnPacientes = new System.Windows.Forms.Button();
             this.pcbPaciente = new System.Windows.Forms.PictureBox();
             this.lblPacientes = new System.Windows.Forms.Label();
@@ -101,12 +107,7 @@
             this.lblDia = new System.Windows.Forms.Label();
             this.btnPacientesMedico = new System.Windows.Forms.Button();
             this.btnHistorial = new System.Windows.Forms.Button();
-            this.lblIdPaciente = new System.Windows.Forms.Label();
-            this.txtNombrePaciente = new System.Windows.Forms.TextBox();
-            this.txtApellidosPaciente = new System.Windows.Forms.TextBox();
-            this.txtLocalidad = new System.Windows.Forms.TextBox();
-            this.txtAlergias = new System.Windows.Forms.TextBox();
-            this.txtDestacar = new System.Windows.Forms.TextBox();
+            this.timeNow = new System.Windows.Forms.Timer(this.components);
             idatencLabel = new System.Windows.Forms.Label();
             fechaLabel = new System.Windows.Forms.Label();
             medicoLabel = new System.Windows.Forms.Label();
@@ -576,7 +577,7 @@
             this.pnlMedicos.Controls.Add(this.txtApellidosMedico);
             this.pnlMedicos.Controls.Add(this.txtNombreMedico);
             this.pnlMedicos.Controls.Add(this.lblIdMedico);
-            this.pnlMedicos.Controls.Add(this.button1);
+            this.pnlMedicos.Controls.Add(this.btnMedicos);
             this.pnlMedicos.Controls.Add(this.pcbMedico);
             this.pnlMedicos.Controls.Add(idmedicoLabel);
             this.pnlMedicos.Controls.Add(nombreLabel);
@@ -634,21 +635,23 @@
             this.lblIdMedico.Size = new System.Drawing.Size(0, 13);
             this.lblIdMedico.TabIndex = 13;
             // 
-            // button1
+            // btnMedicos
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(99, 163);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 33);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Gestión de Médicos";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnMedicos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMedicos.Location = new System.Drawing.Point(99, 163);
+            this.btnMedicos.Name = "btnMedicos";
+            this.btnMedicos.Size = new System.Drawing.Size(153, 33);
+            this.btnMedicos.TabIndex = 12;
+            this.btnMedicos.Text = "Gestión de Médicos";
+            this.btnMedicos.UseVisualStyleBackColor = true;
+            this.btnMedicos.Click += new System.EventHandler(this.btnMedicos_Click);
             // 
             // pcbMedico
             // 
             this.pcbMedico.Location = new System.Drawing.Point(21, 33);
             this.pcbMedico.Name = "pcbMedico";
             this.pcbMedico.Size = new System.Drawing.Size(100, 124);
+            this.pcbMedico.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbMedico.TabIndex = 11;
             this.pcbMedico.TabStop = false;
             // 
@@ -656,11 +659,11 @@
             // 
             this.lblMedico.AutoSize = true;
             this.lblMedico.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMedico.Location = new System.Drawing.Point(18, 14);
+            this.lblMedico.Location = new System.Drawing.Point(49, 16);
             this.lblMedico.Name = "lblMedico";
             this.lblMedico.Size = new System.Drawing.Size(48, 13);
             this.lblMedico.TabIndex = 0;
-            this.lblMedico.Text = "Medico";
+            this.lblMedico.Text = "Médico";
             // 
             // pnlPacientes
             // 
@@ -685,6 +688,62 @@
             this.pnlPacientes.Size = new System.Drawing.Size(355, 266);
             this.pnlPacientes.TabIndex = 3;
             // 
+            // txtDestacar
+            // 
+            this.txtDestacar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDestacar.Location = new System.Drawing.Point(214, 197);
+            this.txtDestacar.Multiline = true;
+            this.txtDestacar.Name = "txtDestacar";
+            this.txtDestacar.ReadOnly = true;
+            this.txtDestacar.Size = new System.Drawing.Size(128, 53);
+            this.txtDestacar.TabIndex = 20;
+            // 
+            // txtAlergias
+            // 
+            this.txtAlergias.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAlergias.Location = new System.Drawing.Point(214, 139);
+            this.txtAlergias.Multiline = true;
+            this.txtAlergias.Name = "txtAlergias";
+            this.txtAlergias.ReadOnly = true;
+            this.txtAlergias.Size = new System.Drawing.Size(128, 52);
+            this.txtAlergias.TabIndex = 19;
+            // 
+            // txtLocalidad
+            // 
+            this.txtLocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLocalidad.Location = new System.Drawing.Point(214, 113);
+            this.txtLocalidad.Name = "txtLocalidad";
+            this.txtLocalidad.ReadOnly = true;
+            this.txtLocalidad.Size = new System.Drawing.Size(128, 20);
+            this.txtLocalidad.TabIndex = 18;
+            // 
+            // txtApellidosPaciente
+            // 
+            this.txtApellidosPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtApellidosPaciente.Location = new System.Drawing.Point(214, 87);
+            this.txtApellidosPaciente.Name = "txtApellidosPaciente";
+            this.txtApellidosPaciente.ReadOnly = true;
+            this.txtApellidosPaciente.Size = new System.Drawing.Size(128, 20);
+            this.txtApellidosPaciente.TabIndex = 17;
+            // 
+            // txtNombrePaciente
+            // 
+            this.txtNombrePaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNombrePaciente.Location = new System.Drawing.Point(214, 61);
+            this.txtNombrePaciente.Name = "txtNombrePaciente";
+            this.txtNombrePaciente.ReadOnly = true;
+            this.txtNombrePaciente.Size = new System.Drawing.Size(128, 20);
+            this.txtNombrePaciente.TabIndex = 16;
+            // 
+            // lblIdPaciente
+            // 
+            this.lblIdPaciente.AutoSize = true;
+            this.lblIdPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIdPaciente.Location = new System.Drawing.Point(214, 35);
+            this.lblIdPaciente.Name = "lblIdPaciente";
+            this.lblIdPaciente.Size = new System.Drawing.Size(0, 13);
+            this.lblIdPaciente.TabIndex = 15;
+            // 
             // btnPacientes
             // 
             this.btnPacientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -694,6 +753,7 @@
             this.btnPacientes.TabIndex = 14;
             this.btnPacientes.Text = "Gestión de Pacientes";
             this.btnPacientes.UseVisualStyleBackColor = true;
+            this.btnPacientes.Click += new System.EventHandler(this.btnPacientes_Click);
             // 
             // pcbPaciente
             // 
@@ -709,7 +769,7 @@
             // 
             this.lblPacientes.AutoSize = true;
             this.lblPacientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPacientes.Location = new System.Drawing.Point(21, 18);
+            this.lblPacientes.Location = new System.Drawing.Point(40, 18);
             this.lblPacientes.Name = "lblPacientes";
             this.lblPacientes.Size = new System.Drawing.Size(57, 13);
             this.lblPacientes.TabIndex = 12;
@@ -805,20 +865,22 @@
             // lblHora
             // 
             this.lblHora.AutoSize = true;
+            this.lblHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHora.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblHora.Location = new System.Drawing.Point(19, 60);
+            this.lblHora.Location = new System.Drawing.Point(41, 60);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(35, 13);
+            this.lblHora.Size = new System.Drawing.Size(86, 31);
             this.lblHora.TabIndex = 1;
             this.lblHora.Text = "label1";
             // 
             // lblDia
             // 
             this.lblDia.AutoSize = true;
+            this.lblDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblDia.Location = new System.Drawing.Point(16, 11);
+            this.lblDia.Location = new System.Drawing.Point(25, 11);
             this.lblDia.Name = "lblDia";
-            this.lblDia.Size = new System.Drawing.Size(35, 13);
+            this.lblDia.Size = new System.Drawing.Size(86, 31);
             this.lblDia.TabIndex = 0;
             this.lblDia.Text = "label1";
             // 
@@ -842,61 +904,9 @@
             this.btnHistorial.Text = "Historial Clínico";
             this.btnHistorial.UseVisualStyleBackColor = true;
             // 
-            // lblIdPaciente
+            // timeNow
             // 
-            this.lblIdPaciente.AutoSize = true;
-            this.lblIdPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIdPaciente.Location = new System.Drawing.Point(214, 35);
-            this.lblIdPaciente.Name = "lblIdPaciente";
-            this.lblIdPaciente.Size = new System.Drawing.Size(0, 13);
-            this.lblIdPaciente.TabIndex = 15;
-            // 
-            // txtNombrePaciente
-            // 
-            this.txtNombrePaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombrePaciente.Location = new System.Drawing.Point(214, 61);
-            this.txtNombrePaciente.Name = "txtNombrePaciente";
-            this.txtNombrePaciente.ReadOnly = true;
-            this.txtNombrePaciente.Size = new System.Drawing.Size(128, 20);
-            this.txtNombrePaciente.TabIndex = 16;
-            // 
-            // txtApellidosPaciente
-            // 
-            this.txtApellidosPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtApellidosPaciente.Location = new System.Drawing.Point(214, 87);
-            this.txtApellidosPaciente.Name = "txtApellidosPaciente";
-            this.txtApellidosPaciente.ReadOnly = true;
-            this.txtApellidosPaciente.Size = new System.Drawing.Size(128, 20);
-            this.txtApellidosPaciente.TabIndex = 17;
-            // 
-            // txtLocalidad
-            // 
-            this.txtLocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLocalidad.Location = new System.Drawing.Point(214, 113);
-            this.txtLocalidad.Name = "txtLocalidad";
-            this.txtLocalidad.ReadOnly = true;
-            this.txtLocalidad.Size = new System.Drawing.Size(128, 20);
-            this.txtLocalidad.TabIndex = 18;
-            // 
-            // txtAlergias
-            // 
-            this.txtAlergias.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAlergias.Location = new System.Drawing.Point(214, 139);
-            this.txtAlergias.Multiline = true;
-            this.txtAlergias.Name = "txtAlergias";
-            this.txtAlergias.ReadOnly = true;
-            this.txtAlergias.Size = new System.Drawing.Size(128, 52);
-            this.txtAlergias.TabIndex = 19;
-            // 
-            // txtDestacar
-            // 
-            this.txtDestacar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDestacar.Location = new System.Drawing.Point(214, 197);
-            this.txtDestacar.Multiline = true;
-            this.txtDestacar.Name = "txtDestacar";
-            this.txtDestacar.ReadOnly = true;
-            this.txtDestacar.Size = new System.Drawing.Size(128, 53);
-            this.txtDestacar.TabIndex = 20;
+            this.timeNow.Tick += new System.EventHandler(this.timeNow_Tick);
             // 
             // frmMain
             // 
@@ -966,7 +976,7 @@
         private dsBDTableAdapters.pacientesTableAdapter pacientesTableAdapter;
         private System.Windows.Forms.BindingSource pacientesBindingSource;
         private System.Windows.Forms.Panel pnlMedicos;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnMedicos;
         private System.Windows.Forms.PictureBox pcbMedico;
         private System.Windows.Forms.Label lblMedico;
         private System.Windows.Forms.Panel pnlPacientes;
@@ -1001,6 +1011,7 @@
         private System.Windows.Forms.TextBox txtAlergias;
         private System.Windows.Forms.TextBox txtLocalidad;
         private System.Windows.Forms.TextBox txtApellidosPaciente;
+        private System.Windows.Forms.Timer timeNow;
     }
 }
 

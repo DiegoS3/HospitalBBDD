@@ -35,6 +35,7 @@ namespace HospitalBBDD
             
             this.especialidadesTableAdapter.Fill(this.dsBD.especialidades);
             this.cmbEspecialidad.Text = "";
+            this.timeNow.Enabled = true;
             
         }
 
@@ -46,6 +47,7 @@ namespace HospitalBBDD
             if (this.cmbEspecialidad.SelectedIndex > -1)
             {
                 this.cmbMedico.Enabled = true;
+                this.cmbMedico.Text = "";
                 this.cmbMedico.Items.Clear();
                 this.cmbPaciente.Enabled = true;
                 this.cmbPaciente.Items.Clear();
@@ -129,10 +131,29 @@ namespace HospitalBBDD
                 }
                 catch (InvalidCastException)
                 {
-                    //this.pcbMedico.Image = Image.FromFile()
+
+                    this.pcbMedico.Image = Properties.Resources.contact;
+
                 }
-                
             }
+        }
+
+        private void btnMedicos_Click(object sender, EventArgs e)
+        {
+            frmMedicos medicos = new frmMedicos();
+            medicos.ShowDialog();
+        }
+
+        private void btnPacientes_Click(object sender, EventArgs e)
+        {
+            frmPacientes pacientes = new frmPacientes();
+            pacientes.ShowDialog();
+        }
+
+        private void timeNow_Tick(object sender, EventArgs e)
+        {
+            this.lblHora.Text = DateTime.Now.ToString("hh:mm:ss");
+            this.lblDia.Text = DateTime.Now.ToString("dd/MM/yyyy");
         }
     }
 }
