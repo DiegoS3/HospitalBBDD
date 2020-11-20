@@ -179,7 +179,7 @@ namespace HospitalBBDD
 
         private void nombreComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //this.listaMedicosCitas = new ArrayList();
             this.dgvDiagnosticos.Columns[0].ReadOnly = true;
             this.dgvDiagnosticos.Columns[1].ReadOnly = true;
             this.dgvDiagnosticos.Columns[2].ReadOnly = true;
@@ -192,7 +192,49 @@ namespace HospitalBBDD
                 this.lblEspecialidadCita.Text = this.dsBD.diagnosticos[0].especialidad;
                 this.lblIdMedicoCita.Text = id.ToString();
             }
+            else
+            {
+                this.medicosTableAdapter.FillById(this.dsBD.medicos, id);
+                this.lblEspecialidadCita.Text = this.dsBD.medicos[0].especialidad;
+                this.lblIdMedicoCita.Text = id.ToString();
+            }
 
+
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+
+            foreach (DataGridViewRow row in dgvDiagnosticos.Rows)
+            {
+                int id = Convert.ToInt32(row.Cells[0].Value);
+                string diag = row.Cells[4].Value.ToString();
+                atencsmedicasTableAdapter.UpdateDiagnosticos(diag, id);
+            }
+            MessageBox.Show("Diagnóstico actualizado correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            DateTime fecha = dtpFecha.Value.Date;
+            String medico = lblIdMedico.Text;
+            String paciente = lblIdPaciente.Text;
+            String diag = "";
+            atencsmedicasTableAdapter.Insert(fecha, Convert.ToInt32(medico), Convert.ToInt32(paciente), diag);
+            MessageBox.Show("Cita añadida correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //cmbMedico.SelectedItem = cbNombre.SelectedItem.ToString();
+            //cargarDataGridView();
+        }
+
+        private void btnPacientesMedico_Click(object sender, EventArgs e)
+        {
+            frmMedicoPacientes listado = new frmMedicoPacientes();
+            listado.ShowDialog();
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
 
         }
     }

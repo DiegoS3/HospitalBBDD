@@ -97,7 +97,6 @@
             this.lblIdMedicoCita = new System.Windows.Forms.Label();
             this.lblEspecialidadCita = new System.Windows.Forms.Label();
             this.nombreComboBox = new System.Windows.Forms.ComboBox();
-            this.medicosBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.dgvDiagnosticos = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,6 +107,7 @@
             this.btnActualizar = new System.Windows.Forms.Button();
             this.pcbCitas = new System.Windows.Forms.PictureBox();
             this.lblCitas = new System.Windows.Forms.Label();
+            this.medicosBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.pnlHoraDia = new System.Windows.Forms.Panel();
             this.lblHora = new System.Windows.Forms.Label();
             this.lblDia = new System.Windows.Forms.Label();
@@ -149,10 +149,10 @@
             this.pnlPacientes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbPaciente)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDiagnosticos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.diagnosticosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCitas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource1)).BeginInit();
             this.pnlHoraDia.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasibfk1BindingSource)).BeginInit();
             this.SuspendLayout();
@@ -476,6 +476,7 @@
             // dtpFecha
             // 
             this.dtpFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFecha.Location = new System.Drawing.Point(296, 47);
             this.dtpFecha.MaxDate = new System.DateTime(2022, 12, 31, 0, 0, 0, 0);
             this.dtpFecha.MinDate = new System.DateTime(2020, 11, 20, 0, 0, 0, 0);
@@ -502,6 +503,7 @@
             this.btnAdd.TabIndex = 11;
             this.btnAdd.Text = "Añadir Cita";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // lblNueva
             // 
@@ -543,6 +545,7 @@
             this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
             this.tableAdapterManager.especialidadesTableAdapter = this.especialidadesTableAdapter;
             this.tableAdapterManager.medicosTableAdapter = this.medicosTableAdapter;
+            this.tableAdapterManager.pacienteDiaTableAdapter = null;
             this.tableAdapterManager.pacientesTableAdapter = this.pacientesTableAdapter;
             this.tableAdapterManager.UpdateOrder = HospitalBBDD.dsBDTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
@@ -811,11 +814,6 @@
             this.nombreComboBox.TabIndex = 10;
             this.nombreComboBox.SelectedIndexChanged += new System.EventHandler(this.nombreComboBox_SelectedIndexChanged);
             // 
-            // medicosBindingSource1
-            // 
-            this.medicosBindingSource1.DataMember = "medicos";
-            this.medicosBindingSource1.DataSource = this.dsBD;
-            // 
             // dgvDiagnosticos
             // 
             this.dgvDiagnosticos.AllowUserToAddRows = false;
@@ -882,6 +880,7 @@
             this.btnActualizar.TabIndex = 8;
             this.btnActualizar.Text = "Actualizar Diagnóstico";
             this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // pcbCitas
             // 
@@ -902,6 +901,11 @@
             this.lblCitas.Size = new System.Drawing.Size(101, 13);
             this.lblCitas.TabIndex = 0;
             this.lblCitas.Text = "Citas del Médico";
+            // 
+            // medicosBindingSource1
+            // 
+            this.medicosBindingSource1.DataMember = "medicos";
+            this.medicosBindingSource1.DataSource = this.dsBD;
             // 
             // pnlHoraDia
             // 
@@ -944,6 +948,7 @@
             this.btnPacientesMedico.TabIndex = 6;
             this.btnPacientesMedico.Text = "Pacientes Médico";
             this.btnPacientesMedico.UseVisualStyleBackColor = true;
+            this.btnPacientesMedico.Click += new System.EventHandler(this.btnPacientesMedico_Click);
             // 
             // btnHistorial
             // 
@@ -954,6 +959,7 @@
             this.btnHistorial.TabIndex = 7;
             this.btnHistorial.Text = "Historial Clínico";
             this.btnHistorial.UseVisualStyleBackColor = true;
+            this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
             // 
             // timeNow
             // 
@@ -1005,10 +1011,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pcbPaciente)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDiagnosticos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.diagnosticosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbCitas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource1)).EndInit();
             this.pnlHoraDia.ResumeLayout(false);
             this.pnlHoraDia.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasibfk1BindingSource)).EndInit();
