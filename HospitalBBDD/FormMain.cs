@@ -17,6 +17,8 @@ namespace HospitalBBDD
         private ArrayList listaMedicos;
         private ArrayList listaMedicosCitas;
         private ArrayList listaPacientes;
+        private ComboBox[] listaCombos;
+        public static bool cerrado;
 
         public frmMain()
         {
@@ -43,29 +45,21 @@ namespace HospitalBBDD
         }
 
         private void cmbEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
             this.listaMedicos = new ArrayList();
             this.listaPacientes = new ArrayList();
 
-            if (this.cmbEspecialidad.SelectedIndex > -1)
-            {
-                this.cmbMedico.Enabled = true;
-                this.cmbMedico.Text = "";
-                this.cmbMedico.Items.Clear();
-                this.cmbPaciente.Enabled = true;
-                this.cmbPaciente.Items.Clear();
-                string especialidad = this.cmbEspecialidad.Text;
-                this.medicosTableAdapter.FillByEspecialidad(this.dsBD.medicos, especialidad);
-                this.pacientesTableAdapter.Fill(this.dsBD.pacientes);
-
-            }
-            else
-            {
-                this.cmbMedico.Enabled = false;
-                this.cmbMedico.Text = "";
-                this.cmbPaciente.Enabled = false;
-                this.cmbPaciente.Text = "";
-            }
+            this.cmbMedico.Enabled = true;
+            this.cmbMedico.Text = "";
+            this.cmbMedico.Items.Clear();
+            this.cmbPaciente.Enabled = true;
+            this.cmbPaciente.Items.Clear();
+            string especialidad = this.cmbEspecialidad.Text;
+            this.medicosTableAdapter.FillByEspecialidad(this.dsBD.medicos, especialidad);
+            this.pacientesTableAdapter.Fill(this.dsBD.pacientes);
+            this.nombreComboBox.Text = "";
+            this.lblEspecialidadCita.Text = "";
+            this.lblIdMedicoCita.Text = "";
 
             foreach (var item in this.dsBD.medicos)
             {
@@ -84,9 +78,11 @@ namespace HospitalBBDD
 
         }
 
+
         private void cmbMedico_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int id = (int)listaMedicos[this.cmbMedico.SelectedIndex];       
+            int id = (int)listaMedicos[this.cmbMedico.SelectedIndex];
+            this.dsBD.medicos.Clear();
             this.medicosTableAdapter.FillById(this.dsBD.medicos, id);
 
             this.lblIdMedico.Text = id.ToString();
@@ -94,7 +90,8 @@ namespace HospitalBBDD
             this.txtApellidosMedico.Text = this.dsBD.medicos[0].apellidos;
             this.txtMovil.Text = this.dsBD.medicos[0].movil;
             this.txtEspecialidad.Text = this.dsBD.medicos[0].especialidad;
-            //this.nombreComboBox.Text = this.dsBD.medicos
+            this.nombreComboBox.Text = this.dsBD.medicos[0].nombre + " " + this.dsBD.medicos[0].apellidos;
+            
             cambiarFotoMedico();
         }
 
@@ -164,6 +161,7 @@ namespace HospitalBBDD
         {
             this.listaMedicosCitas = new ArrayList();
             this.medicosTableAdapter.Fill(this.dsBD.medicos);
+            this.nombreComboBox.Items.Clear();
             this.nombreComboBox.Text = "";
             this.lblEspecialidadCita.Text = "";
             this.lblIdMedicoCita.Text = "";
@@ -175,44 +173,27 @@ namespace HospitalBBDD
 
             }
 
-        }
+        }               
 
-        private void nombreComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //this.listaMedicosCitas = new ArrayList();
-            this.dgvDiagnosticos.Columns[0].ReadOnly = true;
-            this.dgvDiagnosticos.Columns[1].ReadOnly = true;
-            this.dgvDiagnosticos.Columns[2].ReadOnly = true;
-            this.dgvDiagnosticos.Columns[3].ReadOnly = true;
-
-            int id = (int)listaMedicosCitas[this.nombreComboBox.SelectedIndex];            
-            this.diagnosticosTableAdapter.FillByIdMedico(this.dsBD.diagnosticos, id);
-            if (this.dsBD.diagnosticos.Count > 0)
-            {
-                this.lblEspecialidadCita.Text = this.dsBD.diagnosticos[0].especialidad;
-                this.lblIdMedicoCita.Text = id.ToString();
-            }
-            else
-            {
-                this.medicosTableAdapter.FillById(this.dsBD.medicos, id);
-                this.lblEspecialidadCita.Text = this.dsBD.medicos[0].especialidad;
-                this.lblIdMedicoCita.Text = id.ToString();
-            }
-
-
-        }
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-
-            foreach (DataGridViewRow row in dgvDiagnosticos.Rows)
+            if (this.nombreComboBox.Text.Equals(string.Empty))
             {
-                int id = Convert.ToInt32(row.Cells[0].Value);
-                string diag = row.Cells[4].Value.ToString();
-                atencsmedicasTableAdapter.UpdateDiagnosticos(diag, id);
+                MessageBox.Show("Existen campos vacios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                erpCita.SetError(this.nombreComboBox, "Campo Vacio");
             }
-            MessageBox.Show("Diagnóstico actualizado correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            else
+            {
+                foreach (DataGridViewRow row in dgvDiagnosticos.Rows)
+                {
+                    int id = Convert.ToInt32(row.Cells[0].Value);
+                    string diag = row.Cells[4].Value.ToString();
+                    atencsmedicasTableAdapter.UpdateDiagnosticos(diag, id);
+                }
+                MessageBox.Show("Diagnóstico actualizado correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -221,10 +202,42 @@ namespace HospitalBBDD
             String medico = lblIdMedico.Text;
             String paciente = lblIdPaciente.Text;
             String diag = "";
-            atencsmedicasTableAdapter.Insert(fecha, Convert.ToInt32(medico), Convert.ToInt32(paciente), diag);
-            MessageBox.Show("Cita añadida correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cmbMedico.SelectedItem = cbNombre.SelectedItem.ToString();
-            //cargarDataGridView();
+            this.listaCombos = new ComboBox[] { this.cmbEspecialidad, this.cmbMedico, this.cmbPaciente };
+            erpCita.Clear();
+
+            if (comprobarDatosCita(this.listaCombos))
+            {
+                atencsmedicasTableAdapter.Insert(fecha, Convert.ToInt32(medico), Convert.ToInt32(paciente), diag);
+                MessageBox.Show("Cita añadida correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //cmbMedico.SelectedItem = cbNombre.SelectedItem.ToString();
+                //cargarDataGridView();
+            }
+            else
+            {
+                MessageBox.Show("Existen campos vacios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private bool comprobarDatosCita(ComboBox[] cmb)
+        {
+            bool correcto = false;
+            int cont = 0;
+
+            foreach (var item in cmb)
+            {
+                if (!errorProviderTB(erpCita, item))
+                {
+                    cont++;
+                }
+            }
+            if (cont == cmb.Length)
+            {
+                correcto = true;
+            }            
+
+            return correcto;
+
         }
 
         private void btnPacientesMedico_Click(object sender, EventArgs e)
@@ -235,7 +248,55 @@ namespace HospitalBBDD
 
         private void btnHistorial_Click(object sender, EventArgs e)
         {
+            frmHistorialClinico historial = new frmHistorialClinico();
+            historial.ShowDialog();
+        }
 
+        private Boolean errorProviderTB(ErrorProvider ep, ComboBox tb)
+        {
+            Boolean error;
+
+            if (tb.Text.Equals(string.Empty))
+            {
+
+                ep.SetError(tb, "El campo no puede estar vacio");
+                error = true;
+
+            }
+            else { error = false; }
+
+            return error;
+
+        }
+
+        private void nombreComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            //this.listaMedicosCitas = new ArrayList();
+            this.dgvDiagnosticos.Columns[0].ReadOnly = true;
+            this.dgvDiagnosticos.Columns[1].ReadOnly = true;
+            this.dgvDiagnosticos.Columns[2].ReadOnly = true;
+            this.dgvDiagnosticos.Columns[3].ReadOnly = true;
+
+            try
+            {
+                int id = (int)listaMedicosCitas[this.nombreComboBox.SelectedIndex];
+                this.diagnosticosTableAdapter.FillByIdMedico(this.dsBD.diagnosticos, id);
+                this.lblEspecialidadCita.Text = this.dsBD.diagnosticos[0].especialidad;
+                this.lblIdMedicoCita.Text = id.ToString();
+            }
+            catch (ArgumentOutOfRangeException) { }
+            catch (IndexOutOfRangeException) { }
+        }
+
+        private void dgvDiagnosticos_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            this.btnActualizar.Enabled = true;
+        }
+
+        private void frmMain_Activated(object sender, EventArgs e)
+        {
+
+            //cargarMedicos();
         }
     }
 }

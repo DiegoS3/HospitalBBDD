@@ -32,32 +32,32 @@
             System.Windows.Forms.Label nombreLabel;
             System.Windows.Forms.Label idmedicoLabel;
             System.Windows.Forms.Label fechaLabel;
-            this.dsBD = new HospitalBBDD.dsBD();
-            this.medicosTableAdapter = new HospitalBBDD.dsBDTableAdapters.medicosTableAdapter();
-            this.atencsmedicasTableAdapter = new HospitalBBDD.dsBDTableAdapters.atencsmedicasTableAdapter();
             this.cmbMedicos = new System.Windows.Forms.ComboBox();
-            this.medicosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblIdMedico = new System.Windows.Forms.Label();
             this.fechaDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.atencsmedicasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnBuscar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.pacienteDiaTableAdapter = new HospitalBBDD.dsBDTableAdapters.pacienteDiaTableAdapter();
             this.dgvPacienteDia = new System.Windows.Forms.DataGridView();
+            this.erpError = new System.Windows.Forms.ErrorProvider(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pacienteDiaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dsBD = new HospitalBBDD.dsBD();
+            this.atencsmedicasBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.medicosBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.medicosTableAdapter = new HospitalBBDD.dsBDTableAdapters.medicosTableAdapter();
+            this.atencsmedicasTableAdapter = new HospitalBBDD.dsBDTableAdapters.atencsmedicasTableAdapter();
+            this.pacienteDiaTableAdapter = new HospitalBBDD.dsBDTableAdapters.pacienteDiaTableAdapter();
             this.tableAdapterManager = new HospitalBBDD.dsBDTableAdapters.TableAdapterManager();
-            this.erpError = new System.Windows.Forms.ErrorProvider(this.components);
             nombreLabel = new System.Windows.Forms.Label();
             idmedicoLabel = new System.Windows.Forms.Label();
             fechaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dsBD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacienteDia)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pacienteDiaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pacienteDiaBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dsBD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // nombreLabel
@@ -90,19 +90,6 @@
             fechaLabel.TabIndex = 5;
             fechaLabel.Text = "Fecha:";
             // 
-            // dsBD
-            // 
-            this.dsBD.DataSetName = "dsBD";
-            this.dsBD.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // medicosTableAdapter
-            // 
-            this.medicosTableAdapter.ClearBeforeFill = true;
-            // 
-            // atencsmedicasTableAdapter
-            // 
-            this.atencsmedicasTableAdapter.ClearBeforeFill = true;
-            // 
             // cmbMedicos
             // 
             this.cmbMedicos.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.medicosBindingSource, "nombre", true));
@@ -113,11 +100,6 @@
             this.cmbMedicos.Size = new System.Drawing.Size(121, 21);
             this.cmbMedicos.TabIndex = 2;
             this.cmbMedicos.SelectedIndexChanged += new System.EventHandler(this.cmbMedicos_SelectedIndexChanged);
-            // 
-            // medicosBindingSource
-            // 
-            this.medicosBindingSource.DataMember = "medicos";
-            this.medicosBindingSource.DataSource = this.dsBD;
             // 
             // lblIdMedico
             // 
@@ -138,11 +120,6 @@
             this.fechaDateTimePicker.Size = new System.Drawing.Size(127, 20);
             this.fechaDateTimePicker.TabIndex = 6;
             // 
-            // atencsmedicasBindingSource
-            // 
-            this.atencsmedicasBindingSource.DataMember = "atencsmedicas";
-            this.atencsmedicasBindingSource.DataSource = this.dsBD;
-            // 
             // btnBuscar
             // 
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -158,15 +135,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(86, 24);
+            this.label1.Location = new System.Drawing.Point(215, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(125, 24);
             this.label1.TabIndex = 8;
             this.label1.Text = "PACIENTES";
-            // 
-            // pacienteDiaTableAdapter
-            // 
-            this.pacienteDiaTableAdapter.ClearBeforeFill = true;
             // 
             // dgvPacienteDia
             // 
@@ -187,6 +160,11 @@
             this.dgvPacienteDia.Size = new System.Drawing.Size(539, 159);
             this.dgvPacienteDia.TabIndex = 9;
             // 
+            // erpError
+            // 
+            this.erpError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.erpError.ContainerControl = this;
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.DataPropertyName = "nombre";
@@ -206,6 +184,33 @@
             this.pacienteDiaBindingSource.DataMember = "pacienteDia";
             this.pacienteDiaBindingSource.DataSource = this.dsBD;
             // 
+            // dsBD
+            // 
+            this.dsBD.DataSetName = "dsBD";
+            this.dsBD.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // atencsmedicasBindingSource
+            // 
+            this.atencsmedicasBindingSource.DataMember = "atencsmedicas";
+            this.atencsmedicasBindingSource.DataSource = this.dsBD;
+            // 
+            // medicosBindingSource
+            // 
+            this.medicosBindingSource.DataMember = "medicos";
+            this.medicosBindingSource.DataSource = this.dsBD;
+            // 
+            // medicosTableAdapter
+            // 
+            this.medicosTableAdapter.ClearBeforeFill = true;
+            // 
+            // atencsmedicasTableAdapter
+            // 
+            this.atencsmedicasTableAdapter.ClearBeforeFill = true;
+            // 
+            // pacienteDiaTableAdapter
+            // 
+            this.pacienteDiaTableAdapter.ClearBeforeFill = true;
+            // 
             // tableAdapterManager
             // 
             this.tableAdapterManager.atencsmedicasTableAdapter = null;
@@ -216,11 +221,6 @@
             this.tableAdapterManager.pacienteDiaTableAdapter = null;
             this.tableAdapterManager.pacientesTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = HospitalBBDD.dsBDTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            // 
-            // erpError
-            // 
-            this.erpError.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.erpError.ContainerControl = this;
             // 
             // frmMedicoPacientes
             // 
@@ -240,12 +240,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Consultas";
             this.Load += new System.EventHandler(this.frmMedicoPacientes_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dsBD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacienteDia)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pacienteDiaBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pacienteDiaBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dsBD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

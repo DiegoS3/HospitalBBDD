@@ -19,10 +19,67 @@ namespace HospitalBBDD
 
         private void medicosBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
-            this.Validate();
-            this.medicosBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.dsBD);
+            
+            try
+            {
+                if (is_valide())
+                {
+                    this.Validate();
+                    this.medicosBindingSource.EndEdit();
+                    this.tableAdapterManager.UpdateAll(this.dsBD);
+                    insertar();
+                    bindingNavigatorAddNewItem.Enabled = true;//habilita el boton de nuevo registro
+                    bindingNavigatorMovePreviousItem.Enabled = true;
+                    bindingNavigatorMoveFirstItem.Enabled = true;
+                    bindingNavigatorDeleteItem.Enabled = true;
+                    DialogResult r = MessageBox.Show("Guardado con éxito \nDesea continuar?", "Guardado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (r == DialogResult.No)
+                    {
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se ha podido guardar.\nPor favor, debe rellenar todos los campos", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                }
+
+            }
+            catch (NoNullAllowedException ex)
+            {
+                MessageBox.Show("No se ha podido guardar, " + ex.Message, "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (MySql.Data.MySqlClient.MySqlException)
+            {
+                MessageBox.Show("No se ha podido guardar, campos obligatorios vacios", "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show("No se ha podido guardar, " + exp.Message, "Atencion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private bool is_valide()
+        {
+            bool valid = true;
+            int e = errorTxt(apellidosTextBox) + errorTxt(movilTextBox) + errorTxt(nombreTextBox);
+            if (e > 0)
+            {
+                valid = false;
+            }
+            return valid;
+
+        }
+
+        private int errorTxt(TextBox t)
+        {
+            int e = 0;
+            if (t.Text.Equals("") || t == null)
+            {
+                e++;
+            }
+            return e;
         }
 
         private void FormMedicos_Load(object sender, EventArgs e)
@@ -55,7 +112,7 @@ namespace HospitalBBDD
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Seguro que quieres eliminar la pelicula?", "Eliminar pelicula",
+            if (MessageBox.Show("¿Seguro que quieres eliminar el médico?", "Eliminar médico",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 //Creamos la consulta para los alquileres
@@ -66,7 +123,7 @@ namespace HospitalBBDD
                 if (dsBD.atencsmedicas.Count > 0)
                 {
 
-                    MessageBox.Show("No se puede borrar al médico", "El médico tiene citas pendientes",
+                    MessageBox.Show("No se puede borrar al médico. El médico tiene citas pendientes", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                 }
@@ -84,6 +141,22 @@ namespace HospitalBBDD
                 }
 
             }
+        }
+
+        private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+            bindingNavigatorAddNewItem.Enabled = false;
+            bindingNavigatorMovePreviousItem.Enabled = false;
+            bindingNavigatorMoveFirstItem.Enabled = false;
+            bindingNavigatorDeleteItem.Enabled = false;
+            this.idmedicoLabel1.Text = "";
+        }
+
+        private void insertar()
+        {
+            //(nombre, apellidos, movil, especialidad, foto)
+            this.medicosTableAdapter.Insert(this.nombreTextBox.Text, this.apellidosTextBox.Text, this.movilTextBox.Text, this.especialidadComboBox.Text, this.fotoPictureBox.Image);
+
         }
     }
 }

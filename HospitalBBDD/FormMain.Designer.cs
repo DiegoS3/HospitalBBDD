@@ -116,6 +116,7 @@
             this.timeNow = new System.Windows.Forms.Timer(this.components);
             this.diagnosticosTableAdapter = new HospitalBBDD.dsBDTableAdapters.diagnosticosTableAdapter();
             this.atencsmedicasibfk1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.erpCita = new System.Windows.Forms.ErrorProvider(this.components);
             fechaLabel = new System.Windows.Forms.Label();
             medicoLabel = new System.Windows.Forms.Label();
             lblPaciente = new System.Windows.Forms.Label();
@@ -155,6 +156,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.medicosBindingSource1)).BeginInit();
             this.pnlHoraDia.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasibfk1BindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erpCita)).BeginInit();
             this.SuspendLayout();
             // 
             // fechaLabel
@@ -812,7 +814,7 @@
             this.nombreComboBox.Name = "nombreComboBox";
             this.nombreComboBox.Size = new System.Drawing.Size(217, 21);
             this.nombreComboBox.TabIndex = 10;
-            this.nombreComboBox.SelectedIndexChanged += new System.EventHandler(this.nombreComboBox_SelectedIndexChanged);
+            this.nombreComboBox.SelectedValueChanged += new System.EventHandler(this.nombreComboBox_SelectedValueChanged);
             // 
             // dgvDiagnosticos
             // 
@@ -835,6 +837,7 @@
             this.dgvDiagnosticos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvDiagnosticos.Size = new System.Drawing.Size(626, 115);
             this.dgvDiagnosticos.TabIndex = 9;
+            this.dgvDiagnosticos.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDiagnosticos_CellValueChanged);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -873,6 +876,7 @@
             // 
             // btnActualizar
             // 
+            this.btnActualizar.Enabled = false;
             this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnActualizar.Location = new System.Drawing.Point(377, 64);
             this.btnActualizar.Name = "btnActualizar";
@@ -974,6 +978,11 @@
             this.atencsmedicasibfk1BindingSource.DataMember = "atencsmedicas_ibfk_1";
             this.atencsmedicasibfk1BindingSource.DataSource = this.medicosBindingSource1;
             // 
+            // erpCita
+            // 
+            this.erpCita.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.erpCita.ContainerControl = this;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -989,7 +998,9 @@
             this.Controls.Add(this.pnlAtencion);
             this.Controls.Add(this.pnlInformativo);
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hospital";
+            this.Activated += new System.EventHandler(this.frmMain_Activated);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.pnlInformativo.ResumeLayout(false);
             this.pnlInformativo.PerformLayout();
@@ -1018,6 +1029,7 @@
             this.pnlHoraDia.ResumeLayout(false);
             this.pnlHoraDia.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.atencsmedicasibfk1BindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erpCita)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1092,6 +1104,7 @@
         private System.Windows.Forms.Label lblIdMedicoCita;
         private System.Windows.Forms.BindingSource medicosBindingSource1;
         private System.Windows.Forms.BindingSource atencsmedicasibfk1BindingSource;
+        private System.Windows.Forms.ErrorProvider erpCita;
     }
 }
 
