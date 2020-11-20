@@ -59,6 +59,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsBD.xsd</DependentUpon>
     </Compile>
+    <Compile Include="FormHistorialClinico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHistorialClinico.Designer.cs">
+      <DependentUpon>FormHistorialClinico.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormHistorialClinico.resx">
+      <DependentUpon>FormHistorialClinico.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
